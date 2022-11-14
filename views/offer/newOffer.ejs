@@ -1,0 +1,158 @@
+
+ <%- include('../partial/header'); %>
+		
+
+ <div class="hk-pg-wrapper">
+	<div class="container-fluid" >
+            <div class="row">
+                <div class="col-11 mx-auto mt-10" >                                                    
+                    <form class="row g-3" method="POST" onsubmit="return false" id="offer-create-form">
+                            <div class="col-md-6">
+                                <label  class="form-label">Başlık</label>
+                                <input type="text" class="form-control" id="offer-form" name="title">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Firma</label>
+                                <div class="input-group">
+                                    <select class="form-control select2 customers-filtering" name="companytitleId">
+                                       <% for(const company of companyData) { %> 
+                                        <option value="<%= company._id %>"><%= company.companytitle %></option>
+                                        <% } %> 
+                                      </select>
+                                </div>
+                                        
+                            </div>
+                            
+                            <div class="col-12">
+                                <div class="input-group date" id="datepicker">
+                                    <input type="text" class="form-control" id="date" name="offerDate"/>
+                                    <span class="input-group-append">
+                                      <span class="input-group-text bg-light d-block">
+                                        <i class="fa fa-calendar"></i>
+                                      </span>
+                                    </span>
+                                  </div>
+                                
+                            </div>
+                            <div class="col-12">
+                                <label  class="form-label">Teklif koşulları</label>
+                                <textarea class="form-control" rows="3" placeholder="Teklif koşulları" name="offerCondition"></textarea>
+                            </div>
+
+                        <div class="col-10  mt-10">
+                            <label  class="form-label fw-bold">Ürün/Hizmet</label>
+                        </div>   
+                        <div class="col-11  mt-5 d-flex">
+                            <div class="form-check me-5">
+                                <input type="radio" class="form-check-input check"  name="currency" required value="usd">
+                                <label class="form-check-label" for="usdChecked"><span>($)</span> Dolar </label>
+                             </div>
+                            <div class="form-check mb-3">
+                                <input type="radio" class="form-check-input check" name="currency"  required value="tr">
+                                <label class="form-check-label" for="trChecked"><span>(₺)</span> Türk Lirası</label>
+                            </div>
+                        </div>     
+                        <div class="col-12 d-flex justify-content-end">
+                            <button type="button" class="btn btn-light" id="btnAdd"><span class="material-icons">add </span></button>
+                        </div>
+                        <table class="table nowrap mt-5" >
+                            <thead>
+                                <tr>
+                                    <th>Ürün Adı</th>
+                                    <th>Değer</th>
+                                    <th>Birim</th>
+                                    <th>Birim Fiyatı</th>
+                                    <th>Vergi</th>
+                                    <th>Toplam Tutar</th>
+                                </tr>
+                            </thead>
+                            <p id="par"></p>
+ 
+                            <tbody id="dynamicTable"> 
+                                <tr id="R0"> 
+                                    <td>
+                                        <div class="input-group">
+                                            <select class="form-control select2 products-filtering" name="productId[]">
+                                                <% for(const products of productsData) { %> 
+                                                 <option value="<%= products._id %>"><%= products.productName %></option>
+                                                 <% } %> 
+                                               </select>
+                                        </div>
+                                                
+                                    </td>
+                                    <td><input class="form-control  ms-n5 piece" type="number" name="piece[]"/> </td>
+                                    <td>
+                                        <select size="1" class="form-control form-select" name="unit[]">
+                                            <option value="Adet">
+                                                Adet
+                                            </option>
+                                            <option value="Metre">
+                                                Metre
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td><input class="form-control currencyInput unitPrice"  type="text"  name="unitPrice[]"> </td>
+                                    <td>
+                                        <div class="input-group ">
+                                            <span class="input-group-text">%</span>
+                                            <input type="text" class="form-control taxPercent" name="taxPercent[]" >
+                                        </div>
+                                    </td>
+                                 
+                                    <td>
+                                        <div class="input-group ">
+                                            <input type="text" class="form-control is-valid" name="totalAccount[]" disabled >
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                            </table>
+                            
+                            <div class="row g-3 justify-content-end">
+                                <div class="col-6 justify-content-end">
+                                    <hr class="  hr-3 hr-success" />
+                                </div>
+                                
+                                <div class="col-8 d-flex  justify-content-end">
+                                    <label class="col-md-4">Ara Toplam:</label>
+                                    <span class="col-md-4" class="input-group-text" id="subTotal"></span>
+                                </div>
+                                <div class="col-8 d-flex  justify-content-end">
+                                    <label class="col-md-4">Toplam KDV:</label>
+                                    <span class="col-md-4" class="input-group-text "  id="totalKDV"></span>
+                                </div>
+                                <div class="col-8 d-flex  justify-content-end">
+                                    <label class="col-md-4">Genel Toplam:</label>
+                                    <span class="col-md-4" class="input-group-text " id="generalTotal"></span>
+                                    
+                                </div>
+                                
+                            </div>
+
+                           
+                            <div class="col-11 d-flex justify-content-center mt-5">
+                                <button class="btn addItem"  id="offer-create-button">Kayıt</button>
+                            </div>
+                            
+                        </form>       
+                                                       		 
+                        <% if(error){ %>
+
+                            <div class="alert alert-danger" role="alert">
+                                <%= error %>
+                            </div>
+                        <%} %>
+                <div>
+         </div>                                                   
+	</div>
+</div>
+
+<script>
+    var productList__ = '<%- JSON.stringify(productsData) %>'; 
+  
+  </script>
+															
+	
+
+ <%- include('../partial/footer'); %>

@@ -1,0 +1,61 @@
+
+ <%- include('../partial/header'); %>
+
+ <div class="hk-pg-wrapper">
+	<div class="container-fluid" >
+            <div class="row">
+                <div class="col-8 mx-auto mt-10" >      	
+                    <form method="POST"   onsubmit="return false" id="user-create-form">
+                        <div class="form-group">
+                            <label class="form-label" for="exampleInputuname_1">Kullanıcı Adı</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa fa-user"></i></span>
+                                <input type="text" class="form-control" id="exampleInputuname_1" placeholder="Kullanıcı adı" name="username">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="exampleInputEmail_1">Email</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa fa-inbox"></i></span>
+                                <input type="email" class="form-control" id="exampleInputEmail_1" placeholder="Email" name="email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Şifre</label>
+                            <div class="input-group" id="show_hide_password">
+                            <input class="form-control " type="password" placeholder="Şifre" name="password">
+                            <div class="input-group-addon">
+                                <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Durum</label>
+                            <div>
+                                <div class="form-check mb-1">
+                                    <input name="status" class="form-check-input" id="active" type="radio" value="true">
+                                    <label class="form-check-label" for="true">Aktif</label>
+                                </div>
+                                <div class="form-check">
+                                    <input  name="status" value="false" class="form-check-input" id="passive" type="radio">
+                                    <label class="form-check-label" for="false" >Pasif</label>
+                                </div>
+                            </div>
+                        </div>
+                        <button  type="button" class="btn btn-primary me-1"  id="user-create-button" >Kaydet</button>
+                        <button type="submit" class="btn btn-light">Vazgeç</button>
+                        </form>	
+                        <% if(error){ %>
+
+                            <div class="alert alert-danger" role="alert">
+                                <%= error %>
+                              </div>
+                        
+                          <% }  %>  
+                    </div>
+                </div>
+         </div>                                                   
+	</div>
+</div>
+
+ <%- include('../partial/footer'); %>

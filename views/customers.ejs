@@ -1,0 +1,58 @@
+
+ <%- include('./partial/header'); %>
+		
+
+ <div class="hk-pg-wrapper">
+	<div class="container-fluid" >
+            <div class="row">
+                <div class="col-12 mx-auto" >
+                    <div  id="specialBtn">
+                        <a href="customers/newCustomer" class="btn addItem">Ekle</a> 
+                        </div>									
+                    <table class="table table-hover table-striped mb-0 shadow-lg p-3 mb-5 bg-white rounded">
+                                 <thead>
+                                     <tr>
+                                         <th>Cari Ünvanı</th>
+                                         <th>Adı</th>
+                                         <th>Soyadı</th>
+                                         <th>Email</th>
+                                         <th>Telefon</th>
+                                         <th>Detay</th>
+                                         <th></th>
+                                 
+                                     </tr>
+                                 </thead>
+                                 <tbody>
+                                    <% for(var i = 0; i < data.length; i++) { %>
+                                    <tr class="table-light" style="color: rgb(48, 47, 47) !important;">
+                                         <td><%= data[i].companytitle%></td>
+                                         <td><%= data[i].name%></td>
+                                         <td><%= data[i].surname%></td>
+                                         <td><%= data[i].email%></td>
+                                         <td><%= data[i].phone%></td>
+                                         <td><a href="customers/detailCustomer/<%= data[i]._id%>" class="btn btn-icon btn-rounded btn-flush-primary flush-soft-hover" data-bs-toggle="tooltip" data-bs-original-title="Detail"><span class="icon"><span class="feather-icon"><i data-feather="file-text"></i></span></span></a></td>
+                                         <td>
+                                           
+                                             <a href="customers/editCustomer/<%= data[i]._id%>" class="btn btn-icon btn-rounded btn-flush-primary flush-soft-hover" data-bs-toggle="tooltip" data-bs-original-title="Edit"><span class="icon"><span class="feather-icon"><i data-feather="edit-3"></i></span></span></a>
+                                             
+                                             <a  data-id="<%= data[i]._id%>" class="delete_customer btn btn-icon btn-rounded btn-flush-danger flush-soft-hover"  data-bs-toggle="tooltip" data-bs-original-title="Delete"><span class="icon"><span class="feather-icon"><i data-feather="trash-2"></i></span></span></a>
+                                         </td>
+                                     </tr>
+                                     
+                                     <% } %>
+                                 </tbody>
+                                 
+                    </table>
+                </div>
+            </div>
+        
+           
+           
+         </div>                                                   
+	</div>
+</div>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+ <%- include('./partial/footer'); %>

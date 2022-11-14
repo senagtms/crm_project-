@@ -1,0 +1,82 @@
+
+ <%- include('../partial/header'); %>
+
+
+                
+       
+
+ <div class="hk-pg-wrapper">
+	<div class="container-fluid" >
+            <div class="row">
+                <div class="col-8 mx-auto mt-10" >                                                    
+                        <form method="POST" onsubmit="return false" id="customer-create-form">
+                            <div class="form-group">
+                                <label class="form-label">Cari Ünvanı <span style="color:red">*</span></label>
+                                <input type="text" name="companytitle" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Adı<span style="color:red">*</span></label>
+                                <input type="text" name="name" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Soyadı<span style="color:red">*</span></label>
+                                <input type="text" name="surname" class="form-control" required>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email<span style="color:red">*</span></label>
+                                <input type="text" name="email" class="form-control" required>
+                                
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Telefon<span style="color:red">*</span></label>
+                                <input type="text" placeholder=""  data-mask="(999) 999 9999" name="phone" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Vergi Dairesi</label>
+                                <input type="text" name="taxAdministration" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Vergi No</label>
+                                <input type="text" name="taxNumber" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="validationTextarea" class="form-label">Adres</label>
+                                <textarea class="form-control" id="validationTextarea" name="address" ></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="validationTextarea" class="form-label">Sabit İskonto (%)</label>
+                                <div class="input-group mb-2">
+                                    <span class="input-group-text">%</span>
+                                    <input type="text" class="form-control" name="fixedDiscount">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="validationTextarea" class="form-label">Açılış Bakiyesi</label>
+                                <div class="input-group mb-2">
+                                    <span class="input-group-text">₺</span>
+                                    <input type="text" class="form-control" name="startBalance">
+                                </div>
+                            </div>
+                            <div  id="specialBtn">
+                                <button type="submit" class="btn addItem" id="customer-create-button" >Ekle</button>
+                             </div>
+                      
+                        </form>				
+                        		 
+ <% if(error){ %>
+
+    <div class="alert alert-danger" role="alert">
+        <%= error %>
+      </div>
+
+  <% }  %>  		
+                    </div>
+                </div>
+         </div>                                                   
+	</div>
+</div>
+
+
+
+ <%- include('../partial/footer'); %>

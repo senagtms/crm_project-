@@ -1,0 +1,47 @@
+
+ <%- include('./partial/header'); %>
+		
+
+ <div class="hk-pg-wrapper">
+	<div class="container-fluid" >
+            <div class="row">
+                <div class="col-12 mx-auto" >
+                    <div  id="specialBtn">
+                        <a href="users/newUser" class="btn addItem">Ekle</a> 
+                      </div>									
+                    <table class="table table-hover table-striped mb-0 shadow-lg p-3 mb-5 bg-white rounded">
+                                 <thead>
+                                     <tr>
+                                         <th>Kullanıcı Adı</th>
+                                         <th>Email</th>
+                                         <th>Durum</th>
+                                         <th></th>
+                                 
+                                     </tr>
+                                 </thead>
+                                 <tbody>
+                                    <% for(var i = 0; i < data.length; i++) { %>
+                                    <tr class="table-light" style="color: rgb(48, 47, 47) !important;">
+                                         <td><%= data[i].username%></td>
+                                         <td><%= data[i].email%></td>
+                                         <%if(data[i].status==true){%><td style="color:green">Aktif</td><%} else{ %><td  style="color:red">Pasif</td><%}%>
+                                         <td>
+                                             <a href="users/editUser/<%= data[i]._id%>" class="btn btn-icon btn-rounded btn-flush-primary flush-soft-hover" data-bs-toggle="tooltip" data-bs-original-title="Edit"><span class="icon"><span class="feather-icon"><i data-feather="edit-3"></i></span></span></a>
+                                             <a data-id="<%= data[i]._id%>" class="delete_user btn btn-icon btn-rounded btn-flush-danger flush-soft-hover" data-bs-toggle="tooltip" data-bs-original-title="Delete"><span class="icon"><span class="feather-icon"><i data-feather="trash-2"></i></span></span></a>
+                                         </td>
+                                    </tr>
+                                    <% } %>
+                                 </tbody>
+                    </table>
+                </div>
+            </div>
+        
+           
+           
+         </div>                                                   
+	</div>
+</div>
+
+
+
+ <%- include('./partial/footer'); %>

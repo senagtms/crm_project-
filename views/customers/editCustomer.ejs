@@ -1,0 +1,66 @@
+
+ <%- include('../partial/header'); %>
+ <div class="hk-pg-wrapper">
+	<div class="container-fluid" >
+            <div class="row">
+                <div class="col-8 mx-auto mt-10" >                                                    
+                        <form method="POST" id="customer-edit-form" onsubmit="return false">
+                            <div class="form-group">
+                                <label class="form-label">Cari Ünvanı</label>
+                                <input type="text" placeholder="" value="<%= data.companytitle%>" name="companytitle" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Adı</label>
+                                <input type="text" placeholder="" value="<%= data.name %>" name="name" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Soyadı</label>
+                                <input type="text" placeholder="" class="form-control" value="<%= data.surname %>" name="surname">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email</label>
+                                <input type="text" placeholder="" class="form-control" value="<%= data.email %>" name="email">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Telefon</label>
+                                <input type="text" placeholder="" class="form-control" data-mask="(999) 999 9999"  value="<%= data.phone %>" name="phone">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Vergi Dairesi</label>
+                                <input type="text" placeholder="" class="form-control" value="<%= data.taxAdministration %>" name="taxAdministration">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Vergi No</label>
+                                <input type="text" placeholder="" class="form-control" value="<%= data.taxNumber %>" name="taxNumber">
+                            </div>
+                            <div class="form-group">
+                                <label for="validationTextarea" class="form-label">Adres</label>
+                                <textarea class="form-control" id="validationTextarea"  value="<%= data.address %>" name="address"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="validationTextarea" class="form-label">Sabit İskonto (%)</label>
+                                <div class="input-group mb-2">
+                                    <span class="input-group-text">%</span>
+                                    <input type="text" class="form-control" value="<%= data.fixedDiscount %>" name="fixedDiscount">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="validationTextarea" class="form-label">Açılış Bakiyesi</label>
+                                <div class="input-group mb-2">
+                                    <span class="input-group-text">₺</span>
+                                    <input type="text" class="form-control"value="<%= data.startBalance %>" name="startBalance">
+                                </div>
+                            </div>
+                            <div  id="specialBtn">
+                                <button type="submit" class="btn addItem" id="customer-edit-button" data-id="<%= data._id%>">Güncelle</button>
+                             </div>
+                        </form>						
+                    </div>
+                </div>
+         </div>                                                   
+	</div>
+</div>
+
+<script src="<%= url %>vendors/jasny-bootstrap/dist/js/jasny-bootstrap.min.js"></script>
+
+ <%- include('../partial/footer'); %>

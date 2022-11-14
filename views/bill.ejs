@@ -1,0 +1,55 @@
+
+ <%- include('./partial/header'); %>
+		
+
+ <div class="hk-pg-wrapper">
+	<div class="container-fluid" >
+            <div class="row">
+                <div class="col-12 mx-auto mt-12" >							
+                    <table class="table table-hover table-striped mb-0 shadow-lg p-3 mb-5 bg-white rounded">
+                                 <thead>
+                                     <tr>
+                                        <th>Başlık</th>
+                                        <th>Cari Ünvan</th>
+                                        <th>Fatura Tarihi</th>
+                                        <th>Fatura Fiyatı</th>
+                                        <th>Ödenen Tutar</th>
+                                        <th>Kalan Borç</th>
+                                        <th>Ödeme Tarihi</th>
+                                        <th></th>
+                                        <th></th>
+                                 
+                                     </tr>
+                                 </thead>
+                                  <tbody>
+                                    <% for(var i = 0; i < billData.length; i++) { %>
+                                    <tr class="table-light" style="color: rgb(48, 47, 47) !important;">
+                                         <td><%= billData[i].title%></td>
+                                         <td><%= companyData[i].companytitle%></td>
+                                         <td><%= billData[i].billDate.toLocaleDateString()%></td>
+                                         <td><%= billData[i].totalPrice.toLocaleString(undefined, {minimumFractionDigits: 2})%> <% if(billData[i].totalPrice) %> <%if(billData[i].currency == "usd"){%><span style="color:green; font-size: 15px">$</span><%} else{ %><span  style="color:goldenrod">₺</span><%}%></td>
+                                         <td><%= billData[i].payment.toLocaleString(undefined, {minimumFractionDigits: 2})%> <span style="color:goldenrod">₺</span> </td>
+                                         <td><%= billData[i].unpaid.toLocaleString(undefined, {minimumFractionDigits: 2})%> <span style="color:goldenrod">₺</span> </td>
+                                         <td><% if(billData[i].paymentDate === null){ %> <% } else{%> <%=billData[i].paymentDate.toLocaleDateString()  %>  <% } %> </td>
+                                         <td>
+                                            <a href="bill/billDetail/<%= billData[i]._id%>" type="button" class="btn  border border-primary bill" >Fatura Detay</a>
+                                         </td>
+                                         <td>
+                                            <a href="bill/addPayment/<%= billData[i]._id%>" type="button" class="btn  border border-primary bill" >Ödeme Ekle</a>
+                                         </td>
+                                     </tr>
+                                     <% } %>
+                                 </tbody>
+                    </table>
+                </div>
+            </div>
+        
+           
+           
+         </div>                                                   
+
+</div>
+
+
+
+ <%- include('./partial/footer'); %>

@@ -1,0 +1,46 @@
+
+ <%- include('./partial/header'); %>
+		
+
+ <div class="hk-pg-wrapper">
+	<div class="container-fluid">
+            <div class="row">
+                <div class="col-12 mx-auto" >
+                    <div  id="specialBtn">
+                      <a href="offer/newOffer"><button type="button" class="btn  addItem">Ekle</button></a>
+                      </div>									
+                    <table class="table table-hover table-striped mb-0 shadow-lg p-3 mb-5 bg-white rounded">
+                                 <thead>
+                                     <tr>
+                                         <th>Başlık</th>
+                                         <th>Teklif Tarihi</th>
+                                         <th>Teklif Fiyatı</th>
+                                         <th></th><th></th>
+                                 
+                                     </tr>
+                                 </thead>
+                                 <tbody>
+                                    <% for(var i = 0; i < data.length; i++) { %>
+                                     <tr class="table-light" style="color: rgb(48, 47, 47) !important;">
+                                         <td><%= data[i].title%></td>
+                                         <td><%= data[i].offerDate.toLocaleDateString()%></td>
+                                         <td><%= data[i].totalPrice.toLocaleString(undefined, {minimumFractionDigits: 2})%>  <%if(data[i].currency == "usd"){%><span style="color:green; font-size: 15px">$</span><%} else{ %><span  style="color:goldenrod">₺</span><%}%></td>
+                                         <td>
+                                             <a href="offer/editOffer/<%= data[i]._id%>" class="btn btn-icon btn-rounded btn-flush-primary flush-soft-hover" data-bs-toggle="tooltip" data-bs-original-title="Edit"><span class="icon"><span class="feather-icon"><i data-feather="edit-3"></i></span></span></a>
+                                             <a data-id="<%= data[i]._id%>" class="delete_offer btn btn-icon btn-rounded btn-flush-danger flush-soft-hover" data-bs-toggle="tooltip" data-bs-original-title="Delete"><span class="icon"><span class="feather-icon"><i data-feather="trash-2"></i></span></span></a>
+                                         </td>
+                                         <td>
+                                            <button data-id="<%= data[i]._id%>" type="submit" class="btn border border-primary bill" id="createBill">Fatura Oluştur</button>
+                                         </td>
+                                     </tr>
+                                     <% } %>
+                                 </tbody>
+                    </table>
+                </div>
+            </div>
+         </div>                                               
+</div>
+
+
+
+ <%- include('./partial/footer'); %>
