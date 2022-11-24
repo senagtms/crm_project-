@@ -5,7 +5,10 @@
  <div class="hk-pg-wrapper">
 	<div class="container-fluid" >
             <div class="row">
-                <div class="col-11 mx-auto mt-10" >                                                    
+                <div class="col-11 mx-auto mt-3" >
+                    <div  id="specialBtn">
+                        <a href="/app/offer" class="btn goBack"><i class="las la-arrow-left"></i>Geri</a> 
+                      </div>	                                                      
                     <form class="row g-3" method="POST"  id="offer-edit-form" onsubmit="return false">
                             <div class="col-md-6">
                                 <label  class="form-label">Firma</label>
@@ -93,7 +96,11 @@
                                             </option>
                                         </select>
                                     </td>
-                                    <td><input class="form-control currencyInput unitPrice"  type="text"  name="unitPrice[]" value="<%= offerData.items[i].unitPrice%>"> </td>
+                                    <td>
+                                        <div class="input-group ">
+                                            <span class="input-group-text currencySpan"></span>
+                                            <input class="form-control currencyInput unitPrice"  type="text"  name="unitPrice[]" value="<%= offerData.items[i].unitPrice%>"> </td>
+                                        </div>
                                     <td>
                                         <div class="input-group ">
                                             <span class="input-group-text">%</span>
@@ -103,9 +110,13 @@
                                  
                                     <td>
                                         <div class="input-group ">
+                                            <span class="input-group-text border border-success currencySpan"></span>
                                             <input type="text" class="form-control is-valid" name="totalAccount[]" 
                                             value="<%=((parseFloat(offerData.items[i].piece) * parseFloat(offerData.items[i].unitPrice )) + (parseFloat(offerData.items[i].piece) * parseFloat(offerData.items[i].unitPrice)*(parseFloat(offerData.items[i].taxPercent) / 100))).toFixed(2) %>" disabled >
                                         </div>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-danger deleteRow"  ><span class="material-icons">remove </span></button>
                                     </td>
                                 </tr>
                                 <%  total += ((parseFloat(offerData.items[i].piece) * parseFloat(offerData.items[i].unitPrice )) + (parseFloat(offerData.items[i].piece) * parseFloat(offerData.items[i].unitPrice)*(parseFloat(offerData.items[i].taxPercent) / 100))) %>
@@ -127,6 +138,7 @@
                                          <% } %>   
                                          <%=  count.toLocaleString(undefined, {minimumFractionDigits: 2})  %> 
                                     </span>
+                                    <span class="currencySpan"></span>
                                 </div>
                                 <div class="col-8 d-flex  justify-content-end">
                                     <label class="col-md-4">Toplam KDV:</label>
@@ -135,12 +147,14 @@
                                         <% subTotal = total.toFixed(2) - count %>
                                         <%=subTotal.toLocaleString(undefined, {minimumFractionDigits: 2})  %> 
                                     </span>
+                                    <span class="currencySpan"></span>
                                 </div>
                                 <div class="col-8 d-flex  justify-content-end">
                                     <label class="col-md-4">Genel Toplam:</label>
                                     <span class="col-md-4" class="input-group-text  " id="generalTotal">
                                         <%= total.toLocaleString(undefined, {minimumFractionDigits: 2})  %> 
                                     </span>
+                                    <span class="currencySpan"></span>
                                     
                                 </div>
                                 
@@ -148,6 +162,7 @@
  
                             <div class="col-11 d-flex justify-content-center mt-5">
                                 <button class="btn addItem"  type="submit"  id="offer-edit-button" data-id="<%= offerData._id%>">Kayıt</button>
+                                <button data-id="<%= offerData._id%>" type="submit" class="btn border border-primary ms-5 bill" id="createBill">Fatura Oluştur</button>
                             </div>
                         </form>       
                                                        		 

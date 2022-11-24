@@ -43,6 +43,7 @@ const customerSchema = new Schema({
     },
     fixedDiscount:Number,
     startBalance:Number,
+    faxNo:Number
  });
  
  module.exports = Customer = mongoose.model("Customer", customerSchema);

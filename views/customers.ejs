@@ -5,14 +5,28 @@
  <div class="hk-pg-wrapper">
 	<div class="container-fluid" >
             <div class="row">
-                <div class="col-12 mx-auto" >
-                    <div  id="specialBtn">
-                        <a href="customers/newCustomer" class="btn addItem">Ekle</a> 
-                        </div>									
-                    <table class="table table-hover table-striped mb-0 shadow-lg p-3 mb-5 bg-white rounded">
+                <div class="col-11 mx-auto" >
+                    <div class="d-flex">
+                        <div  id="specialBtn">
+                            <a href="/app" class="btn goBack"><i class="las la-arrow-left"></i>Geri</a> 
+                            <a href="customers/newCustomer" class="btn addItem ms-2"><i class="las la-plus"></i>Ekle</a> 
+                        </div>	
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <div class="input-affix-wrapper input-search mb-5  w-350p ">
+                            <input type="text" class="form-control page-search " placeholder="Müşteri Ara" aria-label="Username" aria-describedby="basic-addon1">
+                            <span class="input-suffix"><span class="btn-input-clear"><i class="bi bi-x-circle-fill"></i></span>
+                                <span class="spinner-border spinner-border-sm input-loader text-primary" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </span>
+                            </span>
+                        </div> 
+                    </div>
+            					
+                    <table class="table table-hover table-striped mb-0 shadow-lg p-3 mb-5 bg-white rounded tablesearch">
                                  <thead>
-                                     <tr>
-                                         <th>Cari Ünvanı</th>
+                                     <tr >
+                                         <th>Firma Adı</th>
                                          <th>Adı</th>
                                          <th>Soyadı</th>
                                          <th>Email</th>
@@ -24,7 +38,7 @@
                                  </thead>
                                  <tbody>
                                     <% for(var i = 0; i < data.length; i++) { %>
-                                    <tr class="table-light" style="color: rgb(48, 47, 47) !important;">
+                                    <tr class="table-light tablesearch" style="color: rgb(48, 47, 47) !important;" >
                                          <td><%= data[i].companytitle%></td>
                                          <td><%= data[i].name%></td>
                                          <td><%= data[i].surname%></td>

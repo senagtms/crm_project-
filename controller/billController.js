@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Offer = require("../model/offerModel")
 const Customer = require("../model/customerModel")
 const Products = require("../model/productsModel")
-
+const moment = require("moment");
 const BillController ={
     async listBill(req,res,next){
         try {
@@ -45,13 +45,11 @@ const BillController ={
 
     async paymentSave(req,res,next){
         try {
-
-
-
-             const billId = req.params.id;
+            
+            const billId = req.params.id;
             const billDetail  = await Offer.findById(billId);
             billDetail.payment = req.body.payment;
-            billDetail.paymentDate = req.body.paymentDate;
+            billDetail.paymentDate = moment(req.body.paymentDate, "DD.MM.YYYY HH.mm").toDate();
             billDetail.unpaid = parseFloat(billDetail.unpaid) - parseFloat(billDetail.payment)
             await billDetail.save();
             res.status(200).json({ message: 'success' }); 
@@ -63,3 +61,5 @@ const BillController ={
 }
 
 module.exports=BillController
+
+

@@ -5,7 +5,10 @@
  <div class="hk-pg-wrapper">
 	<div class="container-fluid" >
             <div class="row">
-                <div class="col-11 mx-auto mt-10" >                                                    
+                <div class="col-11 mx-auto mt-3" >
+                    <div  id="specialBtn">
+                        <a href="/app/offer" class="btn goBack"><i class="las la-arrow-left"></i>Geri</a> 
+                      </div>	                                                    
                     <form class="row g-3" method="POST" onsubmit="return false" id="offer-create-form">
                             <div class="col-md-6">
                                 <label  class="form-label">Başlık</label>
@@ -52,9 +55,6 @@
                                 <label class="form-check-label" for="trChecked"><span>(₺)</span> Türk Lirası</label>
                             </div>
                         </div>     
-                        <div class="col-12 d-flex justify-content-end">
-                            <button type="button" class="btn btn-light" id="btnAdd"><span class="material-icons">add </span></button>
-                        </div>
                         <table class="table nowrap mt-5" >
                             <thead>
                                 <tr>
@@ -64,6 +64,7 @@
                                     <th>Birim Fiyatı</th>
                                     <th>Vergi</th>
                                     <th>Toplam Tutar</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <p id="par"></p>
@@ -80,7 +81,8 @@
                                         </div>
                                                 
                                     </td>
-                                    <td><input class="form-control  ms-n5 piece" type="number" name="piece[]"/> </td>
+                                    <td>
+                                        <input class="form-control  ms-n5 piece" type="number" name="piece[]"/> </td>
                                     <td>
                                         <select size="1" class="form-control form-select" name="unit[]">
                                             <option value="Adet">
@@ -91,7 +93,12 @@
                                             </option>
                                         </select>
                                     </td>
-                                    <td><input class="form-control currencyInput unitPrice"  type="text"  name="unitPrice[]"> </td>
+                                    <td>
+                                        <div class="input-group ">
+                                            <span class="input-group-text currencySpan"></span>
+                                            <input class="form-control currencyInput unitPrice"  type="text"  name="unitPrice[]">
+                                        </div>
+                                    </td>
                                     <td>
                                         <div class="input-group ">
                                             <span class="input-group-text">%</span>
@@ -101,14 +108,22 @@
                                  
                                     <td>
                                         <div class="input-group ">
+                                            <span class="input-group-text border border-success currencySpan"></span>
                                             <input type="text" class="form-control is-valid" name="totalAccount[]" disabled >
+                                            
                                         </div>
                                     </td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-danger deleteRow"  ><span class="material-icons">remove </span></button>
+                                    </td>
                                 </tr>
+                                
 
                             </tbody>
                             </table>
-                            
+                            <div class="col-12 d-flex justify-content-center">
+                                <button type="button" class="btn btn-primary" id="btnAdd"><i class="las la-plus"></i> Satır Ekle</button>
+                            </div>
                             <div class="row g-3 justify-content-end">
                                 <div class="col-6 justify-content-end">
                                     <hr class="  hr-3 hr-success" />
@@ -116,24 +131,27 @@
                                 
                                 <div class="col-8 d-flex  justify-content-end">
                                     <label class="col-md-4">Ara Toplam:</label>
-                                    <span class="col-md-4" class="input-group-text" id="subTotal"></span>
+                                    <span class="col-md-4 " class="input-group-text" id="subTotal"></span>
+                                    <span class="currencySpan"></span>
                                 </div>
                                 <div class="col-8 d-flex  justify-content-end">
                                     <label class="col-md-4">Toplam KDV:</label>
                                     <span class="col-md-4" class="input-group-text "  id="totalKDV"></span>
+                                    <span class="currencySpan"></span>
                                 </div>
                                 <div class="col-8 d-flex  justify-content-end">
                                     <label class="col-md-4">Genel Toplam:</label>
                                     <span class="col-md-4" class="input-group-text " id="generalTotal"></span>
+                                    <span class="currencySpan"></span>
                                     
                                 </div>
                                 
                             </div>
-
                            
                             <div class="col-11 d-flex justify-content-center mt-5">
                                 <button class="btn addItem"  id="offer-create-button">Kayıt</button>
                             </div>
+                            
                             
                         </form>       
                                                        		 

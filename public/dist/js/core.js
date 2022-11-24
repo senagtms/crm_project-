@@ -104,6 +104,13 @@
  
 		})
 	});
+    $(".page-search").on("keyup", function() {
+        var value1 = $(this).val().toLowerCase();
+        $("table .tablesearch").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value1) > -1)
+        });
+    });
+    
     $("#product-create-button").click(function(){
         const formData = $("#product-create-form").serialize();
         $.ajax({
@@ -318,7 +325,7 @@
                         icon: 'success',
                         confirmButtonText: 'Kapat'
                       }).then(res => {
-                        location.href = appUrl + '/app/offer'
+                        location.href = appUrl + '/app/offer/newOffer'
                       })
                 }
             }
@@ -349,7 +356,7 @@
                         icon: 'success',
                         confirmButtonText: 'Kapat'
                       }).then(res => {
-                        location.href = appUrl + '/app/offer'
+                        location.href = appUrl + '/app/offer/editOffer/'+id;
                       })
                 }
             }
@@ -503,7 +510,8 @@
            </div>
                    
        </td>
-       <td><input class="form-control  ms-n5 piece" type="number" min="1" step="any" name="piece[]"/> </td>
+       <td>
+            <input class="form-control  ms-n5 piece" type="number" min="1" step="any" name="piece[]"/> </td>
        <td>
            <select size="1" class="form-control form-select"  name="unit[]">
                <option value="adet">
@@ -514,7 +522,11 @@
                </option>
            </select>
        </td>
-       <td><input class="form-control currencyInput unitPrice" type="text"  name="unitPrice[]"> </td>
+       <td>
+             <div class="input-group ">
+                 <span class="input-group-text currencySpan"></span>
+                <input class="form-control currencyInput unitPrice" type="text"  name="unitPrice[]"> </td>
+            </div>    
        <td>
            <div class="input-group ">
                <span class="input-group-text">%</span>
@@ -524,37 +536,52 @@
     
        <td>
            <div class="input-group ">
+                <span class="input-group-text border border-success currencySpan"></span>
                <input type="text" class="form-control is-valid total" name="totalAccount[]" disabled >
            </div>
+       </td>
+       <td>
+            <button type="button" class="btn btn-outline-danger deleteRow" "><span class="material-icons">remove </span></button>
        </td>
    </tr>`);
    $('.currencyInput').maskMoney({thousands:'', decimal:'.', allowZero:true,precision:2});
      });
 
+     $(document).on('click','.deleteRow',function(){
+            $(this).closest("tr").remove();
+     })
+
      function calculateTotal(index){
         const piece = parseFloat($('.piece').eq(index).val());
         const unitPrice = parseFloat($('.unitPrice').eq(index).val());
         const taxPercent = parseFloat($('.taxPercent').eq(index).val());
-       
-        if(piece && unitPrice && taxPercent && !NaN){
-            const total = ((piece * unitPrice ) + (piece * unitPrice* (taxPercent / 100))) ;
+
+        if(piece && unitPrice){
+            let total = 0;
+            if(!taxPercent){
+                 total = (piece * unitPrice );
+            }else {
+                total = ((piece * unitPrice ) + (piece * unitPrice * (taxPercent / 100))) ;
+            }
             $("input[name='totalAccount[]']").eq(index).val(total.toFixed(2));
-            
             let domTotal = 0;
             let domSubTotal= 0 ;
             $("input[name='totalAccount[]']").each(function(item){
                 domTotal += parseFloat(this.value);       
                 $("#generalTotal").text(domTotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
             })
-            $("input[name='unitPrice[]']").each(function(item){
-                domSubTotal += parseFloat(this.value);   
-                $("#subTotal").text(domSubTotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-            })
+            let i = 0;
+            $("input[name='unitPrice[]']").each(function(item,index){
             
+                domSubTotal += parseFloat(this.value) * $('.piece').eq(i).val();      
+                $("#subTotal").text(domSubTotal.toFixed(2));
+                i++;
+            })
             let generalTotal = parseFloat($("#generalTotal").text().replace(/[^0-9\.]+/g,"")) 
             let subTotal=  parseFloat($("#subTotal").text().replace(/[^0-9\.]+/g,""))
             let kdv =  generalTotal - subTotal
              $("#totalKDV").text(kdv.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'))
+
              
         }
         
@@ -579,12 +606,16 @@
       function payment(){
         const pay = parseFloat($('.pay').val());
         if(pay){
-            $("#payment").text(pay.toFixed(2));
+            $("#payment").text(pay.toFixed(2)+"₺");
 
             let totalUnpaid = parseFloat($("#totalUnpaid").text().replace(/[^0-9\.]+/g,"")) 
             let pay_ = parseFloat($("#payment").text()) 
             let unPaid= (totalUnpaid - pay_)
-            $("#remaining").text(unPaid.toFixed(4).replace(/\d(?=(\d{3})+\.)/g, '$&,')) 
+            if(unPaid>0){
+                $("#remaining").text(unPaid.toFixed(4).replace(/\d(?=(\d{3})+\.)/g, '$&,')+ "₺") 
+            }else{
+                $("#remaining").text(0)
+            }
              
         }
       }
@@ -592,7 +623,46 @@
       $(document).on('keyup','.pay',function(){
             payment()
       })
+     
 
+      $('input:radio').change(function() {      
+        var value = $("input[name='currency']:checked").val();   
+        if(value === "usd"){
+            $(".currencySpan").text("$")
+        }
+        else{
+            $(".currencySpan").text("₺")
+        }
+       
+    });
+    
+    const val =   $('input[name="currency"]:checked').val();
+    if(val === "usd"){
+        $(".currencySpan").text("$")
+    }
+    else if(val === "tr"){
+        $(".currencySpan").text("₺")
+    }
+    else{
+        $(".currencySpan").text("")
+    }
 
+    $('#dataTable').DataTable({  columnDefs: [
+        { orderable: true, className: 'reorder', targets: [0,1,2] },
+        { orderable: false, targets: '_all' }
+    ],"searching": false,
+     language: {
+        url: 'https://cdn.datatables.net/plug-ins/1.10.15/i18n/Turkish.json',
+        
+ 
+    }});
+
+    $('#dataTableBill').DataTable({ columnDefs: [
+        { orderable: true, className: 'reorder', targets: [0,1,2,6] },
+        { orderable: false, targets: '_all' }
+    ],"searching": false, language: {
+        url: 'https://cdn.datatables.net/plug-ins/1.10.15/i18n/Turkish.json',
+     
+    }});
  });
 

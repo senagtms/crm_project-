@@ -71335,15 +71335,21 @@ code {
 #specialBtn{
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   margin-top: 30px;
   margin-bottom:30px;
-
-
+}
+.goBack{
+  background-color:#298DFF;
+  color:#fff;
+}
+.goBack:hover{
+  color:#fff
 }
 #createBill{
   font-size: 14px !important;
 }
+
 .btn:focus, div.hopscotch-bubble .hopscotch-bubble-container .hopscotch-actions .hopscotch-nav-button:focus, .btn:active, div.hopscotch-bubble .hopscotch-bubble-container .hopscotch-actions .hopscotch-nav-button:active, .btn:hover, div.hopscotch-bubble .hopscotch-bubble-container .hopscotch-actions .hopscotch-nav-button:hover {
   box-shadow: none;
 }

@@ -4,6 +4,8 @@ $(function() {
 	$('#datable_1').DataTable( {
         scrollX:  true,
 		autoWidth: false,
+		retrieve: true,
+		paging: false,
 		language: { search: "",
 			searchPlaceholder: "Search",
 			sLengthMenu: "_MENU_items",

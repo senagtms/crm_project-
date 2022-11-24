@@ -9,7 +9,7 @@ const UserController={
 
    async login(req,res,next){
         try{
-            console.log("burda")
+
             const {error} = validateLogin(req.body);
             if(error){
                 await req.flash('error', 'Giriş Bilgilerini Kontrol Edin');
@@ -26,12 +26,10 @@ const UserController={
                return res.redirect('/auth/login');
             }
 
-   
 
-            const token = jwt.sign({ _id: user._id},process.env.SECRET_KEY);
-            res.cookie("jwt", token, {
-                httpOnly: true
-            });
+            const token = jwt.sign({ _id: user._id, username:user.username},process.env.SECRET_KEY);
+            res.cookie('userToken',token,{httpOnly:true}) 
+
             const logUserData = await Log.find({userId: user._id})
              const logData = new Log({
                 userId:user._id,
@@ -57,7 +55,7 @@ const UserController={
 
    async logout(req,res,next){
 
-        res.cookie("jwt", "")
+        res.cookie("userToken", "")
         res.redirect("/auth/login")
  
    },

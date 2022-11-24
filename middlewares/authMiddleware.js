@@ -3,17 +3,20 @@ const userModel = require('../model/userModel');
 const secretKey = process.env.SECRET_KEY
 
  async function authMiddleware(req,res,next){
-    const token = req.cookies.jwt || null;
+
+    const token = req.cookies.userToken || null;
   
     try {
         if(!token){
             return res.redirect('/auth/login')
        }
         const userId =  jwt.verify(token,secretKey);
-        //req._id = decodedToken
         const currentUser = await userModel.User.findById(userId,{password:0});
         if(!currentUser) return res.redirect('/auth/login');
+
+        res.cookie("userToken", token);
         req.userData = currentUser;
+        res.locals.user = req.userData
         
         next()
      
@@ -24,14 +27,6 @@ const secretKey = process.env.SECRET_KEY
     }
 
 }
-
-/* async function globalLocals(req, res, next) {
-   res.locals({ 
-      user: req.userData
-    });
-    next();
-
-} */
 
 
 

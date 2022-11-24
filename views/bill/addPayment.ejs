@@ -5,7 +5,10 @@
  <div class="hk-pg-wrapper">
 	<div class="container-fluid" >
             <div class="row">
-                <div class="col-11 mx-auto mt-8" >
+                <div class="col-11 mx-auto mt-3" >
+                        <div  id="specialBtn">
+                            <a href="/app/bill" class="btn goBack"><i class="las la-arrow-left"></i>Geri</a> 
+                        </div>	
                             <table class="table table table-bordered mb-5">
                                 <thead>
                                     <tr>
@@ -32,13 +35,17 @@
                         <div class="row g-3 justify-content-end">
                             <div class="col-8 d-flex  justify-content-end">
                                 <label class="col-md-3">Ara Toplam: </label>
+                                
                                 <span class="col-md-4" class="input-group-text" id="subTotal">
                                     <% let count = 0  %> 
                                     <% for(var i = 0; i < listData.items.length; i++) { %>
                                         <% count += parseFloat(listData.items[i].unitPrice)%>
                                      <% } %>   
                                      <%=  count.toFixed(2)  %> 
+                                     <% if(listData.currency === "usd"){ %> $ <% }else{ %> ₺ <% } %> 
                                 </span>
+                              
+                               
                             </div>
                             <div class="col-8 d-flex  justify-content-end">
                                 <label class="col-md-3">Toplam KDV: </label>
@@ -46,6 +53,7 @@
                                 <span class="col-md-4" class="input-group-text " id="totalKDV">
                                     <% subTotal = listData.totalPrice.toFixed(2) - count %>
                                     <%=subTotal.toFixed(2)  %> 
+                                    <% if(listData.currency === "usd"){ %> $ <% }else{ %> ₺ <% } %> 
                                 </span>
                             </div>
                             <div class="col-8 d-flex  justify-content-end">
@@ -65,10 +73,15 @@
                         </div>
 
                     <div>
+                        
                         <form class="row g-3" method="PATCH" onsubmit="return false" id="payment-create-form" >
                             <div class="col-md-6">
                                 <label  class="form-label">Ödenecek Tutar</label>
-                                <input type="text" class="form-control currencyInput pay" id="offer-form" name="payment">
+                                <div class="input-group ">
+                                    <span class="input-group-text"><% if(listData.currency === "usd") {%>$<% }else  { %> ₺<% } %> </span>
+                                   <input type="text" class="form-control currencyInput pay" id="offer-form" name="payment">
+                                </div>
+                             
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Ödeme Tarihi</label>
@@ -95,6 +108,7 @@
                                 <div class="col-8 d-flex  justify-content-end">
                                     <label class="col-md-4">Ödenen Tutar:</label>
                                     <span class="col-md-4" class="input-group-text " id="payment"></span>
+                                    
                                 </div>
                                 <div class="col-8 d-flex  justify-content-end">
                                     <label class="col-md-4">Kalan Borç:</label>

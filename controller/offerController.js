@@ -45,7 +45,7 @@ const OfferController={
               const offer = new Offer({
                 title: req.body.title,
                 companytitleId: req.body.companytitleId,
-                offerDate:req.body.offerDate,
+                offerDate: moment(req.body.offerDate, "DD.MM.YYYY HH.mm").toDate(),
                 offerCondition:req.body.offerCondition,
                 currency:req.body.currency,
                 items: itemsList,
@@ -65,9 +65,9 @@ const OfferController={
     },
     async list(req,res,next){
         try {
-            
-            const listOffer = await Offer.find({},"title offerDate currency totalPrice");
-            res.render('offer',{url:req.projectUrl,data:listOffer})
+             const company = await Customer.find({}, 'companytitle _id') 
+            const listOffer = await Offer.find({},"title offerDate currency totalPrice")
+            res.render('offer',{url:req.projectUrl,data:listOffer,companyData:company})
         } catch (error) {
             return next(error)
         }

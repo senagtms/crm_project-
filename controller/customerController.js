@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Customer = require("../model/customerModel")
-
+const Offer = require("../model/offerModel")
 const CustomerController={
 
  
@@ -24,6 +24,7 @@ const CustomerController={
                     phone:req.body.phone,
                     taxAdministration:req.body.taxAdministration,
                     taxNumber:req.body.taxNumber,
+                    faxNo:req.body.faxNo,
                     address:req.body.address,
                     fixedDiscount:req.body.fixedDiscount,
                     startBalance:req.body.startBalance
@@ -104,6 +105,7 @@ const CustomerController={
                 return res.json({error});
               }
             const deleteItem = await Customer.findByIdAndDelete(req.params.id);
+            const updateCustomer = await Offer.findByIdAndUpdate({_id:req.params.id,companytitle:""})
             res.status(200).json({ message: 'success' });
 
               
