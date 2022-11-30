@@ -98,7 +98,8 @@ const OfferController={
             const company = await Customer.find({}, 'companytitle _id')
             const products = await Products.find({}, 'productName _id');
             const findOffer = await Offer.findById(req.params.id);
-            res.render("offer/editOffer",{url:req.projectUrl,offerData: findOffer,companyData:company,productsData:products, error:false})
+
+            res.render("offer/editOffer",{url:req.projectUrl,offerData: findOffer,companyData:company,productsData:products,error:false})
         } catch (error) {
             next(error)
         }

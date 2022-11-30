@@ -11,27 +11,23 @@ const customerSchema = new Schema({
     },
     name:{
         type:String,
-        required:true,
         set:function(data){
             return data.replace(/(^|\s)\S/g, l => l.toUpperCase());
          },
     },
     surname:{
         type:String,
-        required:true,
         set:function(data){
             return data.replace(/(^|\s)\S/g, l => l.toUpperCase());
          },
     },
     email:{
         type:String,
-        required:true,
         trim:true,
         unique:true
     },
     phone:{
         type:String,
-        required:true,
     },
     taxAdministration:String,
     taxNumber:String,

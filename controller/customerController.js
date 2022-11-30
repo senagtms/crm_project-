@@ -7,8 +7,8 @@ const CustomerController={
     async createCustomer(req,res){
         try {
             let error = null;
-            if(!req.body.companytitle || !req.body.name || !req.body.surname || !req.body.email || !req.body.phone){
-                error = 'Lütfen Yıldızlı Alanları Doldurun'
+            if(!req.body.companytitle){
+                error = 'Lütfen Yıldızlı Alanı Doldurun'
             }
 
             if(error){
@@ -31,8 +31,6 @@ const CustomerController={
                 }
             )
            const newCustomer = await customer.save();
-        
-          // res.render("customers",{url:req.projectUrl})
            res.json({success:1});
 
         } catch (error) {

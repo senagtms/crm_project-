@@ -18,7 +18,7 @@ router.get("/users/newUser",async(req,res)=>{
 })
 router.post("/users/newUser",UserController.newUser)
 router.get("/users/editUser/:id", UserController.getByIdUser)
-router.post("/users/editUser/:id",UserController.editUser)
+router.patch("/users/editUser/:id",UserController.editUser)
 router.delete("/users/:id",UserController.deleteUser)
 
 

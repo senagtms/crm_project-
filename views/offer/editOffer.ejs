@@ -11,17 +11,21 @@
                       </div>	                                                      
                     <form class="row g-3" method="POST"  id="offer-edit-form" onsubmit="return false">
                             <div class="col-md-6">
-                                <label  class="form-label">Firma</label>
+                                <label  class="form-label">Teklif Paketi</label>
                                 <input type="text" class="form-control" id="offer-form" name="title"  value="<%= offerData.title%>" >
                             </div>
+                            <% let total = 0  %> 
+                            <% let total__ %> 
                             <div class="col-md-6">
                                 <label class="form-label">Firma</label>
                                 <div class="input-group">
-                                    <select class="form-control select2 customers-filtering" name="companytitleId" value="<%= offerData.companytitleId%>" >
-                                        <% let total = 0  %> 
+                                    <select class="form-control select2 customers-filtering" name="companytitleId">
+
                                        <% for(const company of companyData) { %> 
-                                        <option value="<%= company._id %>"><%= company.companytitle %></option>
-                                        <% } %> 
+                                        <% var selected_ = company._id.toString() ===  offerData.companytitleId.toString() ? 'selected' : '' %>
+                                      <option value="<%= company._id %>"  <%=selected_ %>><%= company.companytitle %> </option>  
+                      
+                                     <% } %> 
                                       </select>
                                 </div>
                                         
@@ -56,9 +60,6 @@
                                 <label class="form-check-label" for="trChecked"><span>(₺)</span> Türk Lirası</label>
                             </div>
                         </div>     
-                        <div class="col-12 d-flex justify-content-end">
-                            <button type="button" class="btn btn-light" id="btnAdd"><span class="material-icons">add </span></button>
-                        </div>
                         <table class="table nowrap mt-5" >
                             <thead>
                                 <tr>
@@ -77,9 +78,11 @@
                                 <tr id="R0"> 
                                     <td>
                                         <div class="input-group">
-                                            <select class="form-control select2 products-filtering" name="productId[]" value="<%= offerData.items[i].productId%>" >
+                                            <select class="form-control select2 products-filtering" name="productId[]">
                                                 <% for(const products of productsData) { %> 
-                                                 <option value="<%= products._id %>"><%= products.productName %></option>
+                                                <% var selected_ = products._id.toString() === offerData.items[i].productId.toString() ? 'selected' : '' %>
+                                                <option value="<%= products._id %>"  <%=selected_ %>><%= products.productName  %> </option>  
+                                               
                                                  <% } %> 
                                                </select>
                                         </div>
@@ -112,7 +115,8 @@
                                         <div class="input-group ">
                                             <span class="input-group-text border border-success currencySpan"></span>
                                             <input type="text" class="form-control is-valid" name="totalAccount[]" 
-                                            value="<%=((parseFloat(offerData.items[i].piece) * parseFloat(offerData.items[i].unitPrice )) + (parseFloat(offerData.items[i].piece) * parseFloat(offerData.items[i].unitPrice)*(parseFloat(offerData.items[i].taxPercent) / 100))).toFixed(2) %>" disabled >
+                                            <% total__ =  ((parseFloat(offerData.items[i].piece) * parseFloat(offerData.items[i].unitPrice )) + (parseFloat(offerData.items[i].piece) * parseFloat(offerData.items[i].unitPrice)*(parseFloat(offerData.items[i].taxPercent) / 100))).toFixed(2)%> 
+                                            value="<%= total__ %>" disabled >
                                         </div>
                                     </td>
                                     <td>
@@ -123,7 +127,9 @@
                             </tbody>
                             <% } %>
                             </table>
-                            
+                            <div class="col-12 d-flex justify-content-center">
+                                <button type="button" class="btn btn-primary" id="btnAdd2"><i class="las la-plus"></i> Satır Ekle</button>
+                            </div>
                             <div class="row g-3 justify-content-end">
                                 <div class="col-6 justify-content-end">
                                     <hr class="  hr-3 hr-success" />
@@ -179,8 +185,8 @@
 
 <script>
     var productList__ = '<%- JSON.stringify(productsData) %>'; 
-
-       
+    
+    
 </script>
 															
 

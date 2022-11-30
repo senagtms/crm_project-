@@ -55,7 +55,7 @@ const UserController={
 
    async logout(req,res,next){
 
-        res.cookie("userToken", "")
+        res.clearCookie("userToken", "")
         res.redirect("/auth/login")
  
    },
@@ -108,7 +108,6 @@ const UserController={
    async getByIdUser(req,res){
         try {
             const valueUser = await User.findById(req.params.id);
-            /* console.log(valueUser) */
             res.render("users/editUser",{url:req.projectUrl,data:valueUser})
         } catch (error) {
             res.json({
@@ -119,7 +118,18 @@ const UserController={
    async editUser(req,res){
 
         try {
-            const edituser = await User.findByIdAndUpdate(req.params.id,req.body, {new:true})
+
+            const user = await User.findById(req.params.id);
+            let hashedPassword = null;
+
+             if(req.body.password){
+                hashedPassword = await bcrypt.hash(req.body.password,10)
+             }  
+             else{
+                hashedPassword = user.password
+             }
+           const edituser = await User.findByIdAndUpdate(req.params.id,{username:req.body.username, email:req.body.email, password:hashedPassword, status:req.body.status}, {new:true})
+
             res.status(200).json({ message: 'success' }); 
         } catch (error) {
              return res.json({error: error.message})

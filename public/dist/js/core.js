@@ -89,7 +89,7 @@
                     data: {id:id},
                     success:function(data){
                         Swal.fire({
-                            title: 'Silme başarılı',
+                            title: 'Silme Başarılı',
                             icon: 'success',
                             text: 'Silindi!',
                             showConfirmButton: false,
@@ -129,7 +129,7 @@
                     return false;
                 }else{
                     Swal.fire({
-                        title: 'Başaırılı!',
+                        title: 'Başarılı!',
                         text: result.error,
                         icon: 'success',
                         confirmButtonText: 'Kapat'
@@ -161,7 +161,7 @@
                     return false;
                 }else{
                     Swal.fire({
-                        title: 'Başaırılı!',
+                        title: 'Başarılı!',
                         text: result.error,
                         icon: 'success',
                         confirmButtonText: 'Kapat'
@@ -276,7 +276,7 @@
         const formData = $("#user-edit-form").serialize();
         $.ajax({
             url:appUrl + '/app/users/editUser/'+id,
-            type:'POST',
+            type:'PATCH',
             dataType:'json',
             data: formData,
             success:function(result){
@@ -325,7 +325,7 @@
                         icon: 'success',
                         confirmButtonText: 'Kapat'
                       }).then(res => {
-                        location.href = appUrl + '/app/offer/newOffer'
+                        location.href = appUrl + '/app/offer'
                       })
                 }
             }
@@ -495,7 +495,7 @@
     });
 
      var rowIdx = 1;
-     // jQuery button click event to add a row
+  
      $('#btnAdd').on('click', function () {
         const productOptionList = JSON.parse(productList__).map(item  => {
             return `<option value="${item._id}">${item.productName}</option>`
@@ -538,6 +538,7 @@
            <div class="input-group ">
                 <span class="input-group-text border border-success currencySpan"></span>
                <input type="text" class="form-control is-valid total" name="totalAccount[]" disabled >
+               
            </div>
        </td>
        <td>
@@ -546,6 +547,65 @@
    </tr>`);
    $('.currencyInput').maskMoney({thousands:'', decimal:'.', allowZero:true,precision:2});
      });
+
+
+        // jQuery button click event to add a row
+        $('#btnAdd2').on('click', function () {
+            const productOptionList = JSON.parse(productList__).map(item  => {
+                return `<option value="${item._id}">${item.productName}</option>`
+            }).join('');
+            
+        // Adding a row inside the tbody.
+        $('#dynamicTable').append(`<tr id="R${++rowIdx}">
+        <td>
+            <div class="input-group">
+                <select class="form-control select2 products-filtering" name="productId[]" value="">
+                        ${productOptionList}
+                    </select>
+            </div>
+                    
+        </td>
+        <td>
+                <input class="form-control  ms-n5 piece" type="number" min="1" step="any" name="piece[]"/> </td>
+        <td>
+            <select size="1" class="form-control form-select"  name="unit[]">
+                <option value="adet">
+                    Adet
+                </option>
+                <option value="metre">
+                    Metre
+                </option>
+            </select>
+        </td>
+        <td>
+                <div class="input-group ">
+                    <span class="input-group-text currencySpan"></span>
+                    <input class="form-control currencyInput unitPrice" type="text"  name="unitPrice[]"> </td>
+                </div>    
+        <td>
+            <div class="input-group ">
+                <span class="input-group-text">%</span>
+                <input type="text" class="form-control taxPercent" name="taxPercent[]" >
+            </div>
+        </td>
+
+        <td>
+            <div class="input-group ">
+                    <span class="input-group-text border border-success currencySpan"></span>
+                <input type="text" class="form-control is-valid total" name="totalAccount[]" disabled >
+                
+            </div>
+        </td>
+        <td>
+                <button type="button" class="btn btn-outline-danger deleteRow" "><span class="material-icons">remove </span></button>
+        </td>
+        </tr>`);
+        $('.currencyInput').maskMoney({thousands:'', decimal:'.', allowZero:true,precision:2});
+        });
+
+
+
+
 
      $(document).on('click','.deleteRow',function(){
             $(this).closest("tr").remove();
@@ -650,7 +710,7 @@
     $('#dataTable').DataTable({  columnDefs: [
         { orderable: true, className: 'reorder', targets: [0,1,2] },
         { orderable: false, targets: '_all' }
-    ],"searching": false,
+    ],"searching": false,   
      language: {
         url: 'https://cdn.datatables.net/plug-ins/1.10.15/i18n/Turkish.json',
         
