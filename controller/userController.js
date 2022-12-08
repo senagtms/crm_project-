@@ -5,8 +5,6 @@ const bcrypt= require('bcrypt');
 const Log = require("../model/logModel");
 
 const UserController={
-
-
    async login(req,res,next){
         try{
 
