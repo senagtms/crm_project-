@@ -11,7 +11,6 @@ const BillController ={
             for(let i=0 ; i<list.length ; i++){
                 const companytitle = await Customer.findById(list[i].companytitleId)   
                 company.push(companytitle)
-                  
             } 
             res.render("bill",{url:req.projectUrl,billData:list,companyData:company})
             
